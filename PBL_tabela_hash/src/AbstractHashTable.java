@@ -70,7 +70,7 @@ public abstract class AbstractHashTable {
 
         for (List<String> bucket : buckets) {
             for (String key : bucket) {
-                int newIndex = hashFunction.hash(key, newCapacity);
+                int newIndex = hashFunction.hash(key, (int) newCapacity);
                 newBuckets[newIndex].add(key);
             }
         }
