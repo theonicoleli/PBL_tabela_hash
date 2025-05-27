@@ -38,12 +38,6 @@ public class Main {
         long searchStart2 = System.nanoTime();
         names.forEach(name -> table2.search(name));
         long searchEnd2 = System.nanoTime();
-<<<<<<< HEAD
-=======
-
-
-        System.out.println("==== Relatório de Eficiência ====\n");
->>>>>>> e430f58e1ce62d5c29f0a60b4a09c42b112a286c
 
         System.out.println("==== Relatório de Eficiência ====");
         System.out.println();
@@ -56,7 +50,6 @@ public class Main {
         System.out.println(" - Sumário da distribuição:");
         printDistributionSummary(table1.getBucketSizes());
         System.out.println(" - Distribuição por bucket:");
-        printDistributionSummary(table1.getBucketSizes());
         printDistribution(table1.getBucketSizes());
 
         // Tabela 2
@@ -68,7 +61,6 @@ public class Main {
         System.out.println(" - Sumário da distribuição:");
         printDistributionSummary(table2.getBucketSizes());
         System.out.println(" - Distribuição por bucket:");
-        printDistributionSummary(table2.getBucketSizes());
         printDistribution(table2.getBucketSizes());
     }
 
@@ -77,10 +69,7 @@ public class Main {
             System.out.printf("   Bucket %2d: %d chaves%n", i, sizes[i]);
         }
     }
-<<<<<<< HEAD
 
-=======
->>>>>>> e430f58e1ce62d5c29f0a60b4a09c42b112a286c
     private static void printDistributionSummary(int[] sizes) {
         if (sizes.length == 0) {
             System.out.println("   Nenhum bucket.");
@@ -92,7 +81,6 @@ public class Main {
         int maxKeys = Integer.MIN_VALUE;
         int emptyBuckets = 0;
 
-<<<<<<< HEAD
         for (int sz : sizes) {
             totalKeys += sz;
             if (sz < minKeys) minKeys = sz;
@@ -115,39 +103,5 @@ public class Main {
         System.out.printf("   Buckets vazios: %d (%.2f%%)%n", emptyBuckets, (double) emptyBuckets / sizes.length * 100);
         System.out.printf("   Desvio Padrão: %.2f%n", stdDev);
         System.out.println("   (Menor desvio indica distribuição mais uniforme)");
-=======
-        for (int size : sizes) {
-            totalKeys += size;
-            if (size < minKeys) {
-                minKeys = size;
-            }
-            if (size > maxKeys) {
-                maxKeys = size;
-            }
-            if (size == 0) {
-                emptyBuckets++;
-            }
-        }
-
-        double averageKeysPerBucket = (double) totalKeys / sizes.length;
-
-        double sumOfSquares = 0.0;
-        for (int size : sizes) {
-            sumOfSquares += Math.pow(size - averageKeysPerBucket, 2);
-        }
-        double standardDeviation = Math.sqrt(sumOfSquares / sizes.length);
-
-
-        System.out.printf("   Total de buckets: %d%n", sizes.length);
-        System.out.printf("   Total de chaves inseridas: %d%n", totalKeys);
-        System.out.printf("   Chaves por bucket (Média): %.2f%n", averageKeysPerBucket);
-        System.out.printf("   Chaves por bucket (Mínimo): %d%n", minKeys);
-        System.out.printf("   Chaves por bucket (Máximo): %d%n", maxKeys);
-        System.out.printf("   Buckets vazios: %d (%.2f%%)%n", emptyBuckets, (double) emptyBuckets / sizes.length * 100);
-        System.out.printf("   Desvio Padrão (dispersão): %.2f%n", standardDeviation);
-        System.out.println("   (Um desvio padrão menor indica uma distribuição mais uniforme/menos clusterização)");
->>>>>>> e430f58e1ce62d5c29f0a60b4a09c42b112a286c
     }
 }
-
-

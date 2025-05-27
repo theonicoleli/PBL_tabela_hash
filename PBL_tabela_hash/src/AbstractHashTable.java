@@ -21,9 +21,7 @@ public abstract class AbstractHashTable {
 
         int idx = hashFunction.hash(key, buckets.length);
         List<String> bucket = buckets[idx];
-        if (!bucket.isEmpty()) {
-            collisions++;
-        }
+        if (!bucket.isEmpty()) collisions++;
         bucket.add(key);
         size++;
     }
@@ -38,21 +36,6 @@ public abstract class AbstractHashTable {
     public boolean search(String key) {
         int idx = hashFunction.hash(key, buckets.length);
         return buckets[idx].contains(key);
-    }
-
-    public ArrayList<String> getBiggestBucket() {
-        int maxIndex = 0;
-        int maxSize = 0;
-        for (int i = 0; i < buckets.length; i++) {
-            int s = buckets[i].size();
-            if (s > maxSize) {
-                maxSize = s;
-                maxIndex = i;
-            }
-        }
-        ArrayList<String> names = new ArrayList<>();
-        buckets[maxIndex].forEach(name -> names.add(name));
-        return names;
     }
 
     public int getCollisionCount() {
@@ -79,16 +62,11 @@ public abstract class AbstractHashTable {
             newBuckets[i] = new LinkedList<>();
         }
         for (List<String> bucket : buckets) {
-<<<<<<< HEAD
             bucket.forEach(key -> {
-=======
-            for (String key : bucket) {
->>>>>>> e430f58e1ce62d5c29f0a60b4a09c42b112a286c
-                int newIndex = hashFunction.hash(key, (int) newCapacity);
+                int newIndex = hashFunction.hash(key, newCapacity);
                 newBuckets[newIndex].add(key);
             });
         }
-
         this.buckets = newBuckets;
     }
 }
