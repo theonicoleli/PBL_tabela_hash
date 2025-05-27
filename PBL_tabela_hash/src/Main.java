@@ -6,9 +6,8 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
         String filename = "female_names.txt";
-        int capacity = 32;
+        int initialCapacity = 32;
 
-        // 1. Ler nomes
         ArrayList<String> names = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
@@ -22,11 +21,9 @@ public class Main {
             return;
         }
 
-        // 2. Criar duas tabelas concretas
-        ChainedHashTable table1 = new ChainedHashTable(capacity, new SimpleSumHash());
-        ChainedHashTable table2 = new ChainedHashTable(capacity, new PolynomialHash());
+        ChainedHashTable table1 = new ChainedHashTable(initialCapacity, new SimpleSumHash());
+        ChainedHashTable table2 = new ChainedHashTable(initialCapacity, new PolynomialHash());
 
-        // 3. Inserção e medição de tempo
         long start1 = System.nanoTime();
         for (String name : names) table1.insert(name);
         long end1 = System.nanoTime();
@@ -35,7 +32,6 @@ public class Main {
         for (String name : names) table2.insert(name);
         long end2 = System.nanoTime();
 
-        // 4. Busca e medição de tempo (busca de todos os nomes)
         long searchStart1 = System.nanoTime();
         for (String name : names) table1.search(name);
         long searchEnd1 = System.nanoTime();
@@ -43,8 +39,7 @@ public class Main {
         long searchStart2 = System.nanoTime();
         for (String name : names) table2.search(name);
         long searchEnd2 = System.nanoTime();
-
-        // 5. Relatório no console
+        
         System.out.println("==== Relatório de Eficiência ====\n");
 
         System.out.println("Tabela 1 (SimpleSumHash):");
