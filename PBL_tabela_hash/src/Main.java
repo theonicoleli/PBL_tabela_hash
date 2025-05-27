@@ -1,14 +1,13 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
         String filename = "female_names.txt";
         int initialCapacity = 32;
 
-        ArrayList<String> names = new ArrayList<>();
+        List<String> names = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -25,36 +24,49 @@ public class Main {
         ChainedHashTable table2 = new ChainedHashTable(initialCapacity, new PolynomialHash());
 
         long start1 = System.nanoTime();
-        for (String name : names) table1.insert(name);
+        names.forEach(name -> table1.insert(name));
         long end1 = System.nanoTime();
 
         long start2 = System.nanoTime();
-        for (String name : names) table2.insert(name);
+        names.forEach(name -> table2.insert(name));
         long end2 = System.nanoTime();
 
         long searchStart1 = System.nanoTime();
-        for (String name : names) table1.search(name);
+        names.forEach(name -> table1.search(name));
         long searchEnd1 = System.nanoTime();
 
         long searchStart2 = System.nanoTime();
-        for (String name : names) table2.search(name);
+        names.forEach(name -> table2.search(name));
         long searchEnd2 = System.nanoTime();
+<<<<<<< HEAD
+=======
 
 
         System.out.println("==== Relatório de Eficiência ====\n");
+>>>>>>> e430f58e1ce62d5c29f0a60b4a09c42b112a286c
 
+        System.out.println("==== Relatório de Eficiência ====");
+        System.out.println();
+
+        // Tabela 1
         System.out.println("Tabela 1 (SimpleSumHash):");
         System.out.printf(" - Colisões: %d%n", table1.getCollisionCount());
         System.out.printf(" - Tempo inserção: %.3f ms%n", (end1 - start1) / 1e6);
         System.out.printf(" - Tempo busca: %.3f ms%n", (searchEnd1 - searchStart1) / 1e6);
+        System.out.println(" - Sumário da distribuição:");
+        printDistributionSummary(table1.getBucketSizes());
         System.out.println(" - Distribuição por bucket:");
         printDistributionSummary(table1.getBucketSizes());
         printDistribution(table1.getBucketSizes());
 
-        System.out.println("\nTabela 2 (PolynomialHash):");
+        // Tabela 2
+        System.out.println();
+        System.out.println("Tabela 2 (PolynomialHash):");
         System.out.printf(" - Colisões: %d%n", table2.getCollisionCount());
         System.out.printf(" - Tempo inserção: %.3f ms%n", (end2 - start2) / 1e6);
         System.out.printf(" - Tempo busca: %.3f ms%n", (searchEnd2 - searchStart2) / 1e6);
+        System.out.println(" - Sumário da distribuição:");
+        printDistributionSummary(table2.getBucketSizes());
         System.out.println(" - Distribuição por bucket:");
         printDistributionSummary(table2.getBucketSizes());
         printDistribution(table2.getBucketSizes());
@@ -65,6 +77,10 @@ public class Main {
             System.out.printf("   Bucket %2d: %d chaves%n", i, sizes[i]);
         }
     }
+<<<<<<< HEAD
+
+=======
+>>>>>>> e430f58e1ce62d5c29f0a60b4a09c42b112a286c
     private static void printDistributionSummary(int[] sizes) {
         if (sizes.length == 0) {
             System.out.println("   Nenhum bucket.");
@@ -76,6 +92,30 @@ public class Main {
         int maxKeys = Integer.MIN_VALUE;
         int emptyBuckets = 0;
 
+<<<<<<< HEAD
+        for (int sz : sizes) {
+            totalKeys += sz;
+            if (sz < minKeys) minKeys = sz;
+            if (sz > maxKeys) maxKeys = sz;
+            if (sz == 0) emptyBuckets++;
+        }
+
+        double average = (double) totalKeys / sizes.length;
+        double sumSquares = 0;
+        for (int sz : sizes) {
+            sumSquares += (sz - average) * (sz - average);
+        }
+        double stdDev = Math.sqrt(sumSquares / sizes.length);
+
+        System.out.printf("   Total de buckets: %d%n", sizes.length);
+        System.out.printf("   Total de chaves inseridas: %d%n", totalKeys);
+        System.out.printf("   Chaves por bucket (Média): %.2f%n", average);
+        System.out.printf("   Chaves por bucket (Mínimo): %d%n", minKeys);
+        System.out.printf("   Chaves por bucket (Máximo): %d%n", maxKeys);
+        System.out.printf("   Buckets vazios: %d (%.2f%%)%n", emptyBuckets, (double) emptyBuckets / sizes.length * 100);
+        System.out.printf("   Desvio Padrão: %.2f%n", stdDev);
+        System.out.println("   (Menor desvio indica distribuição mais uniforme)");
+=======
         for (int size : sizes) {
             totalKeys += size;
             if (size < minKeys) {
@@ -106,5 +146,8 @@ public class Main {
         System.out.printf("   Buckets vazios: %d (%.2f%%)%n", emptyBuckets, (double) emptyBuckets / sizes.length * 100);
         System.out.printf("   Desvio Padrão (dispersão): %.2f%n", standardDeviation);
         System.out.println("   (Um desvio padrão menor indica uma distribuição mais uniforme/menos clusterização)");
+>>>>>>> e430f58e1ce62d5c29f0a60b4a09c42b112a286c
     }
 }
+
+

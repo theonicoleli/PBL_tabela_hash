@@ -1,12 +1,9 @@
-import java.util.LinkedList;
-import java.util.List;
-
 public abstract class AbstractHashTable {
     protected List<String>[] buckets;
     protected HashFunction hashFunction;
     protected int collisions = 0;
     protected int size = 0;
-    protected static final double MAX_LOAD_FACTOR = 0.75 ;
+    protected static final double MAX_LOAD_FACTOR = 0.75;
 
     @SuppressWarnings("unchecked")
     public AbstractHashTable(int capacity, HashFunction hf) {
@@ -43,6 +40,21 @@ public abstract class AbstractHashTable {
         return buckets[idx].contains(key);
     }
 
+    public ArrayList<String> getBiggestBucket() {
+        int maxIndex = 0;
+        int maxSize = 0;
+        for (int i = 0; i < buckets.length; i++) {
+            int s = buckets[i].size();
+            if (s > maxSize) {
+                maxSize = s;
+                maxIndex = i;
+            }
+        }
+        ArrayList<String> names = new ArrayList<>();
+        buckets[maxIndex].forEach(name -> names.add(name));
+        return names;
+    }
+
     public int getCollisionCount() {
         return collisions;
     }
@@ -61,18 +73,20 @@ public abstract class AbstractHashTable {
 
     @SuppressWarnings("unchecked")
     private void resize() {
-        collisions = 0;
         int newCapacity = buckets.length * 2;
         List<String>[] newBuckets = new LinkedList[newCapacity];
         for (int i = 0; i < newCapacity; i++) {
             newBuckets[i] = new LinkedList<>();
         }
-
         for (List<String> bucket : buckets) {
+<<<<<<< HEAD
+            bucket.forEach(key -> {
+=======
             for (String key : bucket) {
+>>>>>>> e430f58e1ce62d5c29f0a60b4a09c42b112a286c
                 int newIndex = hashFunction.hash(key, (int) newCapacity);
                 newBuckets[newIndex].add(key);
-            }
+            });
         }
 
         this.buckets = newBuckets;
